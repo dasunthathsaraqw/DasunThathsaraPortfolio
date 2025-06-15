@@ -1,4 +1,5 @@
 import React from 'react';
+import dasunImage from './dasunThathsara.jpg';
 
 const About = () => {
   return (
@@ -35,7 +36,7 @@ const About = () => {
           {/* Image Content (Right Side) */}
           <div className="w-full md:w-1/2 flex justify-end relative">
             <img
-              src="dizme-logo.png" // Replace with your profile image path
+              src={dasunImage} // Replace with your profile image path
               alt="Dasun Thathsara"
               className="w-72 h-88 object-cover shadow-lg"
             />

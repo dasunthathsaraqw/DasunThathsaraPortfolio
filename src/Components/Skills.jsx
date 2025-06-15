@@ -35,7 +35,7 @@ const Skills = () => {
             </div>
             <div>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/thathsarahema"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center bg-[#0077B5] text-white px-2 py-1 rounded-full hover:bg-[#005A8D] hover:scale-105 transition-all duration-300 text-xs"
@@ -79,7 +79,7 @@ const Skills = () => {
             </div>
             <div>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/thathsarahema"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center bg-[#0077B5] text-white px-2 py-1 rounded-full hover:bg-[#005A8D] hover:scale-105 transition-all duration-300 text-xs"
