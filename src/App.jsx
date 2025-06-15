@@ -5,6 +5,7 @@ import Projects from './Components/Projects';
 import Skills from './Components/Skills';
 import Contact from './Components/Contact';
 import Footer from './Components/Footer';
+import Services from './Components/service ';
 import './App.css';
 
 const App = () => {
@@ -15,7 +16,9 @@ const App = () => {
         <About />
         <Projects />
         <Skills />
+        <Services />
         <Contact />
+        
       </main>
       <Footer />
     </div>
