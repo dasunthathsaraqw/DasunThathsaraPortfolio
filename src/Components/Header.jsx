@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import logo from "./logo.png"
+import logo from "./logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Disable/enable body scroll when menu is open/closed
   useEffect(() => {
@@ -15,113 +26,142 @@ const Header = () => {
     } else {
       document.body.classList.remove('no-scroll');
     }
-    // Cleanup on component unmount or menu close
     return () => document.body.classList.remove('no-scroll');
   }, [isMenuOpen]);
 
   return (
-    <header className="bg-white shadow-md py-4 relative overflow-hidden">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-white/95 backdrop-blur-md shadow-lg' 
+        : 'bg-gradient-to-r from-white/90 via-orange-50/80 to-white/95'
+    } py-4 relative overflow-hidden`}>
+      
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-2 left-10 w-16 h-16 bg-orange-300 rounded-full opacity-10 blur-xl animate-float"></div>
+        <div className="absolute top-1 right-20 w-20 h-20 bg-orange-400 rounded-full opacity-10 blur-2xl animate-float-delayed"></div>
+        <div className="absolute bottom-2 left-1/4 w-12 h-12 bg-orange-500 rounded-full opacity-15 blur-lg animate-pulse-slow"></div>
+        <div className="absolute top-1/2 right-1/3 w-18 h-18 bg-orange-200 rounded-full opacity-10 blur-xl animate-bounce-slow"></div>
+      </div>
+
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center">
-          <img
-            src={logo} // Replace with your logo path or use text as a placeholder
-            alt="Logo"
-            className="h-10 w-auto"
-          />
+        <div className="flex items-center group">
+          <div className="relative">
+            <img
+              src={logo}
+              alt="Logo"
+              className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
+            />
+            <div className="absolute -inset-2 bg-gradient-to-r from-orange-400/20 to-orange-600/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
+          </div>
         </div>
 
-        {/* Hamburger Menu Button (Visible on Mobile) */}
+        {/* Hamburger Menu Button (Mobile) */}
         <button
-          className="md:hidden text-gray-600 focus:outline-none z-30"
+          className="md:hidden text-gray-600 hover:text-orange-500 focus:outline-none z-30 relative p-2 rounded-full transition-all duration-300 hover:bg-orange-50"
           onClick={toggleMenu}
           aria-label="Toggle navigation menu"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-            />
-          </svg>
+          <div className="relative w-6 h-6">
+            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ${
+              isMenuOpen ? 'rotate-45 top-3' : 'top-1'
+            }`}></span>
+            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 top-3 ${
+              isMenuOpen ? 'opacity-0' : 'opacity-100'
+            }`}></span>
+            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ${
+              isMenuOpen ? '-rotate-45 top-3' : 'top-5'
+            }`}></span>
+          </div>
         </button>
 
-        {/* Navigation (Desktop: Horizontal, Mobile: Content-sized) */}
+        {/* Navigation */}
         <nav
           className={`${
             isMenuOpen ? 'flex' : 'hidden'
-          } md:flex flex-col md:flex-row md:space-x-6 md:static md:w-auto md:h-auto md:bg-transparent md:p-0 md:shadow-none fixed top-16 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[80rem] h-auto bg-white p-4 shadow-md z-20 overflow-y-auto md:overflow-visible`}
+          } md:flex flex-col md:flex-row md:space-x-8 md:static md:w-auto md:h-auto md:bg-transparent md:p-0 md:shadow-none fixed top-20 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-[30rem] h-auto bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl z-20 border border-orange-100/50`}
         >
+          {[
+            { href: "#about", label: "About" },
+            { href: "#projects", label: "Projects" },
+            { href: "#skills", label: "Skills" },
+            { href: "#services", label: "Services" },
+            { href: "#contact", label: "Contact" }
+          ].map((item, index) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="text-gray-700 hover:text-orange-500 relative transition-all duration-300 transform hover:scale-105 group py-3 md:py-0 font-medium animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {item.label}
+              <span className="absolute bottom-1 md:bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-orange-500 to-orange-400 transition-all duration-300 group-hover:w-full"></span>
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-orange-400/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+            </a>
+          ))}
+          
+          {/* Download CV Button (Mobile) */}
           <a
-            href="#home"
-            className="text-gray-600 hover:text-orange-500 relative transition duration-300 transform hover:scale-110 group py-2 md:py-0"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#portfolio"
-            className="text-gray-600 hover:text-orange-500 relative transition duration-300 transform hover:scale-110 group py-2 md:py-0"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Portfolio
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#service"
-            className="text-gray-600 hover:text-orange-500 relative transition duration-300 transform hover:scale-110 group py-2 md:py-0"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Service
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#blog"
-            className="text-gray-600 hover:text-orange-500 relative transition duration-300 transform hover:scale-110 group py-2 md:py-0"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Blog
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          <a
-            href="#contact"
-            className="text-gray-600 hover:text-orange-500 relative transition duration-300 transform hover:scale-110 group py-2 md:py-0"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Contact
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-          </a>
-          {/* Download CV Button (Inside Mobile Menu) */}
-          <a
-            href="your-cv.pdf" // Replace with your CV file path or link
+            href="your-cv.pdf"
             download
-            className="md:hidden block text-center text-orange-500 border-2 border-orange-500 px-6 py-2 rounded-full transition duration-300 transform hover:scale-105 mt-4"
+            className="md:hidden group relative px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 hover:scale-105 mt-4 text-center animate-fade-in"
+            style={{ animationDelay: '500ms' }}
             onClick={() => setIsMenuOpen(false)}
           >
-            Download CV
+            <span className="relative z-10">Download CV</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
           </a>
         </nav>
 
-        {/* Download CV Button (Desktop Only) */}
+        {/* Download CV Button (Desktop) */}
         <a
-          href="your-cv.pdf" // Replace with your CV file path or link
+          href="your-cv.pdf"
           download
-          className="hidden md:inline-block relative text-orange-500 border-2 border-orange-500 px-6 py-2 rounded-full transition duration-300 transform hover:scale-105"
+          className="hidden md:inline-block group relative px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 hover:scale-105"
         >
-          Download CV
+          <span className="relative z-10">Download CV</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
         </a>
       </div>
 
-      {/* Background Splash Effect */}
-      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-r from-white via-gray-100 to-white opacity-50 -z-10"></div>
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(-2deg); }
+        }
+        
+        @keyframes bounce-slow {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.15; transform: scale(1); }
+          50% { opacity: 0.25; transform: scale(1.05); }
+        }
+        
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 5s ease-in-out infinite; }
+        .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+        .animate-fade-in { animation: fade-in 0.6s ease-out forwards; }
+        
+        .no-scroll {
+          overflow: hidden;
+        }
+      `}</style>
     </header>
   );
 };
