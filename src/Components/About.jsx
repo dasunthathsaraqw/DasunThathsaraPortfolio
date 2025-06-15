@@ -21,13 +21,13 @@ const About = () => {
                 </button>
               </div>
               <div className="flex space-x-4">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/thathsarahema" target="_blank" rel="noopener noreferrer">
                   <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn" className="w-7 h-7" />
                 </a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/dasunthathsaraqw" target="_blank" rel="noopener noreferrer">
                   <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub" className="w-7 h-7" />
                 </a>
-                <a href="mailto:example@email.com" target="_blank" rel="noopener noreferrer">
+                <a href="mailto:thathsarahema18@email.com" target="_blank" rel="noopener noreferrer">
                   <img src="https://img.icons8.com/ios-filled/50/000000/email.png" alt="Email" className="w-7 h-7" />
                 </a>
               </div>

@@ -1,41 +1,49 @@
 import React, { useState, useRef } from 'react';
+import i1 from "./i1.jpeg"
+import i2 from "./i2.jpeg"
+import i3 from "./i3.jpeg"
+import i4 from "./i4.jpeg"
+import i5 from "./i5.jpeg"
+import i6 from "./i6.jpeg"
+import i7 from "./i7.jpeg"
+import i8 from "./i8.jpeg"
+
 
 const Services = () => {
   const qualifications = "I hold a degree in Computer Science and have over 5 years of experience in web development and team leadership, certified in Full Stack Development and Project Management.";
   const servicesIntro = "I offer tailored web development, team leadership training, and project management solutions to help businesses and individuals achieve their goals efficiently.";
-  const services = [
-    {
-      name: "Web Development",
-      image: "web-dev-image.png",
-      description: "Custom websites with modern designs, responsive layouts, and seamless functionality.",
-      whatsapp: "https://wa.me/1234567890",
-    },
-    {
-      name: "Leadership Training - Team Building",
-      image: "leadership-training-image.png",
-      description: "Workshops focused on fostering team cohesion and collaborative skills.",
-      whatsapp: "https://wa.me/1234567890",
-    },
-    {
-      name: "Leadership Training - Communication",
-      image: "leadership-training-image.png",
-      description: "Training to enhance effective communication and conflict resolution.",
-      whatsapp: "https://wa.me/1234567890",
-    },
-    {
-      name: "Leadership Training - Strategic Leadership",
-      image: "leadership-training-image.png",
-      description: "Programs to develop strategic thinking and leadership vision.",
-      whatsapp: "https://wa.me/1234567890",
-    },
-    {
-      name: "Project Management",
-      image: "project-management-image.png",
-      description: "End-to-end project planning, execution, and delivery for optimal results.",
-      whatsapp: "https://wa.me/1234567890",
-    },
-  ];
-
+const services = [
+  {
+    name: "Web Development",
+    image: i1,
+    description: "Modern, responsive websites using the latest technologies like React, Tailwind, and Node.js.",
+    whatsapp: "https://wa.me/+94775409408",
+  },
+  {
+    name: "Mobile App Development",
+    image: i2,
+    description: "Cross-platform mobile apps built with Kotlin or Flutter, focused on smooth UX and performance.",
+    whatsapp: "https://wa.me/+94775409408",
+  },
+  {
+    name: "Social Media Management",
+    image: i3,
+    description: "Boost your brand's presence through content planning, post design, and analytics tracking.",
+    whatsapp: "https://wa.me/+94775409408",
+  },
+  {
+    name: "Software Development",
+    image: i4,
+    description: "Custom software solutions tailored to business needs, from desktop tools to cloud integrations.",
+    whatsapp: "https://wa.me/+94775409408",
+  },
+  {
+    name: "Database Management",
+    image: i5,
+    description: "Efficient database design, development, and optimization using SQL, MongoDB, and Firebase.",
+    whatsapp: "https://wa.me/+94775409408",
+  },
+];
   const [isPaused, setIsPaused] = useState(false);
   const scrollRef = useRef(null);
 

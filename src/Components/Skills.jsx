@@ -1,4 +1,7 @@
 import React from 'react';
+import a1 from "./a1.jpeg"
+import a2 from "./a2.jpeg"
+
 
 const Skills = () => {
   const technicalSkills = ["JavaScript", "React", "Tailwind CSS", "Git & GitHub", "Node.js", "CSS", "HTML", "Firebase"];
@@ -12,7 +15,7 @@ const Skills = () => {
           {/* Image Content (Left Side) */}
           <div className="w-full md:w-1/3 flex justify-center md:justify-start">
             <img
-              src="skills-image.png" // Replace with your actual technical skills image
+              src={a1} // Replace with your actual technical skills image
               alt="Technical Skills Illustration"
               className="w-56 h-56 object-cover shadow-lg rounded-lg"
             />
@@ -56,7 +59,7 @@ const Skills = () => {
           {/* Image Content (Right Side) */}
           <div className="w-full md:w-1/3 flex justify-center md:justify-end">
             <img
-              src="leadership-image.png" // Replace with your actual leadership skills image
+              src={a2}// Replace with your actual leadership skills image
               alt="Leadership Skills Illustration"
               className="w-56 h-56 object-cover shadow-lg rounded-lg"
             />

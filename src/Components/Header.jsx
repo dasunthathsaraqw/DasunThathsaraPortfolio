@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logo from "./logo.png"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const Header = () => {
         {/* Logo */}
         <div className="flex items-center">
           <img
-            src="dizme-logo.png" // Replace with your logo path or use text as a placeholder
+            src={logo} // Replace with your logo path or use text as a placeholder
             alt="Logo"
             className="h-10 w-auto"
           />
