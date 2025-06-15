@@ -1,7 +1,7 @@
 {
-  "name": "dasunthathasaraportfolio",
+  "name": "DasunThathsaraPortfolio",
   "private": true,
-  "homepage": "https://dasunthathsaraqw.github.io/dasunthathasaraportfolio",
+  "homepage": "https://dasunthathsaraqw.github.io/DasunThathsaraPortfolio",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
