@@ -1,18 +1,19 @@
 import React from 'react';
+import { Link } from 'react-scroll';
 
 const Header = () => {
   return (
-    <nav className="bg-gray-800 text-white p-4 sticky top-0">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Your Name</h1>
-        <div className="space-x-4">
-          <a href="#about" className="hover:text-gray-300">About</a>
-          <a href="#projects" className="hover:text-gray-300">Projects</a>
-          <a href="#skills" className="hover:text-gray-300">Skills</a>
-          <a href="#contact" className="hover:text-gray-300">Contact</a>
-        </div>
+    <header className="bg-white shadow-md sticky top-0 z-10">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-800">Your Name</h1>
+        <nav className="space-x-6">
+          <Link to="about" smooth={true} duration={500} className="text-gray-600 hover:text-gray-900 cursor-pointer">About</Link>
+          <Link to="projects" smooth={true} duration={500} className="text-gray-600 hover:text-gray-900 cursor-pointer">Projects</Link>
+          <Link to="skills" smooth={true} duration={500} className="text-gray-600 hover:text-gray-900 cursor-pointer">Skills</Link>
+          <Link to="contact" smooth={true} duration={500} className="text-gray-600 hover:text-gray-900 cursor-pointer">Contact</Link>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 };
 
