@@ -33,25 +33,20 @@ const Header = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
         ? 'bg-white/95 backdrop-blur-md shadow-lg' 
-        : 'bg-gradient-to-r from-white/90 via-orange-50/80 to-white/95'
-    } py-4 relative overflow-hidden`}>
+        : 'bg-gradient-to-br from-white/90 via-orange-50/80 to-white/95'
+    } py-3 md:py-4 relative overflow-hidden`}>
       
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-2 left-10 w-16 h-16 bg-orange-300 rounded-full opacity-10 blur-xl animate-float"></div>
-        <div className="absolute top-1 right-20 w-20 h-20 bg-orange-400 rounded-full opacity-10 blur-2xl animate-float-delayed"></div>
-        <div className="absolute bottom-2 left-1/4 w-12 h-12 bg-orange-500 rounded-full opacity-15 blur-lg animate-pulse-slow"></div>
-        <div className="absolute top-1/2 right-1/3 w-18 h-18 bg-orange-200 rounded-full opacity-10 blur-xl animate-bounce-slow"></div>
-      </div>
+      {/* Clean gradient overlay - no circles */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-orange-50/80 to-white/95 -z-5"></div>
 
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center group">
           <div className="relative">
             <img
               src={logo}
               alt="Logo"
-              className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
+              className="h-8 sm:h-10 w-auto transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute -inset-2 bg-gradient-to-r from-orange-400/20 to-orange-600/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
           </div>
@@ -63,15 +58,15 @@ const Header = () => {
           onClick={toggleMenu}
           aria-label="Toggle navigation menu"
         >
-          <div className="relative w-6 h-6">
-            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ${
-              isMenuOpen ? 'rotate-45 top-3' : 'top-1'
+          <div className="relative w-5 h-5 sm:w-6 sm:h-6">
+            <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 ${
+              isMenuOpen ? 'rotate-45 top-2 sm:top-3' : 'top-0.5 sm:top-1'
             }`}></span>
-            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 top-3 ${
+            <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 top-2 sm:top-3 ${
               isMenuOpen ? 'opacity-0' : 'opacity-100'
             }`}></span>
-            <span className={`absolute block w-6 h-0.5 bg-current transform transition-all duration-300 ${
-              isMenuOpen ? '-rotate-45 top-3' : 'top-5'
+            <span className={`absolute block w-full h-0.5 bg-current transform transition-all duration-300 ${
+              isMenuOpen ? '-rotate-45 top-2 sm:top-3' : 'top-3.5 sm:top-5'
             }`}></span>
           </div>
         </button>
@@ -129,22 +124,22 @@ const Header = () => {
       <style jsx>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(2deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
         }
         
         @keyframes float-delayed {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(-2deg); }
+          50% { transform: translateY(-30px) rotate(-5deg); }
         }
         
         @keyframes bounce-slow {
           0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
+          50% { transform: translateY(-15px); }
         }
         
         @keyframes pulse-slow {
-          0%, 100% { opacity: 0.15; transform: scale(1); }
-          50% { opacity: 0.25; transform: scale(1.05); }
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 0.3; transform: scale(1.05); }
         }
         
         @keyframes fade-in {
@@ -152,10 +147,10 @@ const Header = () => {
           to { opacity: 1; transform: translateY(0); }
         }
         
-        .animate-float { animation: float 4s ease-in-out infinite; }
-        .animate-float-delayed { animation: float-delayed 5s ease-in-out infinite; }
-        .animate-bounce-slow { animation: bounce-slow 3s ease-in-out infinite; }
-        .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; }
+        .animate-bounce-slow { animation: bounce-slow 4s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-slow 5s ease-in-out infinite; }
         .animate-fade-in { animation: fade-in 0.6s ease-out forwards; }
         
         .no-scroll {

@@ -1,12 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import i1 from "./i1.jpeg"
-import i2 from "./i2.jpeg"
-import i3 from "./i3.jpeg"
-import i4 from "./i4.jpeg"
-import i5 from "./i5.jpeg"
-import i6 from "./i6.jpeg"
-import i7 from "./i7.jpeg"
-import i8 from "./i8.jpeg"
 
 const Services = () => {
   const [visibleSections, setVisibleSections] = useState([]);
@@ -16,49 +8,108 @@ const Services = () => {
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const cardsRef = useRef(null);
+  const animationRef = useRef(null);
+  const scrollPosition = useRef(0);
 
-  const qualifications = "I hold a degree in Computer Science and have over 5 years of experience in web development and team leadership, certified in Full Stack Development and Project Management.";
-  const servicesIntro = "I offer tailored web development, team leadership training, and project management solutions to help businesses and individuals achieve their goals efficiently.";
+const qualifications = "I am an undergraduate Software Engineering student with 2 years of experience working on academic projects and as a freelancer, specializing in software and web development.";
+
+const servicesIntro = "I offer services in software development, mobile app development, web development, social media management, and database management, tailored to meet the needs of individuals and businesses.";
 
   const services = [
     {
       name: "Web Development",
-      image: i1,
+      image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&h=300&fit=crop&crop=center",
       description: "Modern, responsive websites using the latest technologies like React, Tailwind, and Node.js.",
       whatsapp: "https://wa.me/+94775409408",
-      icon: "🌐"
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="m2 12c0 5.523 4.477 10 10 10s10-4.477 10-10-4.477-10-10-10"/>
+        </svg>
+      )
     },
     {
       name: "Mobile App Development",
-      image: i2,
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop&crop=center",
       description: "Cross-platform mobile apps built with Kotlin or Flutter, focused on smooth UX and performance.",
       whatsapp: "https://wa.me/+94775409408",
-      icon: "📱"
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+          <line x1="12" y1="18" x2="12.01" y2="18"/>
+        </svg>
+      )
     },
     {
       name: "Social Media Management",
-      image: i3,
+      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop&crop=center",
       description: "Boost your brand's presence through content planning, post design, and analytics tracking.",
       whatsapp: "https://wa.me/+94775409408",
-      icon: "📊"
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
+          <line x1="18" y1="20" x2="18" y2="10"/>
+          <line x1="12" y1="20" x2="12" y2="4"/>
+          <line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+      )
     },
     {
       name: "Software Development",
-      image: i4,
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop&crop=center",
       description: "Custom software solutions tailored to business needs, from desktop tools to cloud integrations.",
       whatsapp: "https://wa.me/+94775409408",
-      icon: "💻"
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
+          <polyline points="16,18 22,12 16,6"/>
+          <polyline points="8,6 2,12 8,18"/>
+        </svg>
+      )
     },
     {
       name: "Database Management",
-      image: i5,
+      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&crop=center",
       description: "Efficient database design, development, and optimization using SQL, MongoDB, and Firebase.",
       whatsapp: "https://wa.me/+94775409408",
-      icon: "🗄️"
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-8 h-8">
+          <ellipse cx="12" cy="5" rx="9" ry="3"/>
+          <path d="m3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+          <path d="m3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+        </svg>
+      )
     },
   ];
 
-  // Scroll animation effect
+  // Create extended array for seamless scrolling
+  const extendedServices = [...services, ...services, ...services];
+
+  // Smooth auto-scroll effect
+  useEffect(() => {
+    const scroll = () => {
+      if (!isPaused && scrollRef.current) {
+        scrollPosition.current += 0.5; // Adjust speed here (lower = slower)
+        const maxScroll = scrollRef.current.scrollWidth / 3; // Divide by 3 because we have 3 copies
+        
+        if (scrollPosition.current >= maxScroll) {
+          scrollPosition.current = 0;
+        }
+        
+        scrollRef.current.scrollLeft = scrollPosition.current;
+      }
+      animationRef.current = requestAnimationFrame(scroll);
+    };
+
+    animationRef.current = requestAnimationFrame(scroll);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused]);
+
+  // Intersection Observer for scroll animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -84,16 +135,13 @@ const Services = () => {
   // Animated background circles
   const BackgroundCircles = () => (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Large floating circles */}
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-20 animate-pulse"></div>
       <div className="absolute top-1/3 -left-32 w-80 h-80 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full blur-3xl opacity-15 animate-pulse" style={{animationDelay: '2s'}}></div>
       <div className="absolute -bottom-24 right-1/4 w-72 h-72 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-25 animate-pulse" style={{animationDelay: '4s'}}></div>
       
-      {/* Medium floating circles */}
       <div className="absolute top-1/4 right-1/5 w-48 h-48 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full blur-2xl opacity-30 animate-bounce" style={{animationDuration: '6s'}}></div>
       <div className="absolute bottom-1/3 left-1/5 w-40 h-40 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-2xl opacity-20 animate-bounce" style={{animationDuration: '8s', animationDelay: '3s'}}></div>
       
-      {/* Small floating circles */}
       <div className="absolute top-1/2 right-20 w-24 h-24 bg-orange-200 rounded-full blur-xl opacity-40 animate-ping" style={{animationDuration: '4s'}}></div>
       <div className="absolute top-2/3 left-20 w-28 h-28 bg-orange-300 rounded-full blur-xl opacity-30 animate-ping" style={{animationDuration: '5s', animationDelay: '2s'}}></div>
       <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-orange-200 rounded-full blur-xl opacity-35 animate-ping" style={{animationDuration: '3s', animationDelay: '1s'}}></div>
@@ -104,10 +152,21 @@ const Services = () => {
     setIsPaused(!isPaused);
   };
 
-  const handleScroll = (direction) => {
+  const handleManualScroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -300 : 300;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const cardWidth = 320; // Card width + gap
+      const currentScroll = scrollRef.current.scrollLeft;
+      const targetScroll = direction === 'left' 
+        ? Math.max(0, currentScroll - cardWidth)
+        : currentScroll + cardWidth;
+      
+      scrollRef.current.scrollTo({
+        left: targetScroll,
+        behavior: 'smooth'
+      });
+      
+      // Update our scroll position reference
+      scrollPosition.current = targetScroll;
     }
   };
 
@@ -166,10 +225,10 @@ const Services = () => {
             visibleSections.includes('cards') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          {/* Scroll Controls */}
-          <div className="flex justify-center gap-4 mb-8">
+          {/* Control Panel */}
+          <div className="flex justify-center items-center gap-4 mb-8">
             <button
-              onClick={() => handleScroll('left')}
+              onClick={() => handleManualScroll('left')}
               className="group bg-white/80 backdrop-blur-sm hover:bg-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-orange-200"
               aria-label="Scroll left"
             >
@@ -177,23 +236,30 @@ const Services = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
+            
+            <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-orange-200">
+              <button
+                onClick={() => setIsPaused(!isPaused)}
+                className="group p-2 rounded-full hover:bg-orange-100 transition-all duration-300"
+                aria-label={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
+              >
+                {isPaused ? (
+                  <svg className="w-5 h-5 text-orange-600 group-hover:text-orange-700 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 text-orange-600 group-hover:text-orange-700 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                  </svg>
+                )}
+              </button>
+              <span className="text-sm font-medium text-gray-700">
+                {isPaused ? 'Paused' : 'Auto-scrolling'}
+              </span>
+            </div>
+            
             <button
-              onClick={() => setIsPaused(!isPaused)}
-              className="group bg-white/80 backdrop-blur-sm hover:bg-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-orange-200"
-              aria-label={isPaused ? "Resume auto-scroll" : "Pause auto-scroll"}
-            >
-              {isPaused ? (
-                <svg className="w-6 h-6 text-orange-600 group-hover:text-orange-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h.01M19 10a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6 text-orange-600 group-hover:text-orange-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-            </button>
-            <button
-              onClick={() => handleScroll('right')}
+              onClick={() => handleManualScroll('right')}
               className="group bg-white/80 backdrop-blur-sm hover:bg-white p-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 border border-orange-200"
               aria-label="Scroll right"
             >
@@ -204,27 +270,28 @@ const Services = () => {
           </div>
 
           {/* Services Cards Carousel */}
-          <div className="relative">
+          <div className="relative overflow-hidden">
             <div
               ref={scrollRef}
-              className="flex gap-8 overflow-x-auto scrollbar-hidden snap-x snap-mandatory py-4 px-4"
+              className="flex gap-8 overflow-x-hidden py-4 px-4"
               style={{ 
-                animation: isPaused ? 'none' : 'scroll-right 30s linear infinite',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none'
               }}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
             >
-              {services.concat(services).map((service, index) => (
+              {extendedServices.map((service, index) => (
                 <div
                   key={index}
-                  className={`flex-shrink-0 w-80 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/50 text-center cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl snap-center group ${
+                  className={`flex-shrink-0 w-80 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/50 text-center cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl group ${
                     hoveredCard === index ? 'ring-2 ring-orange-300' : ''
                   }`}
                   onClick={handleCardClick}
                   onMouseEnter={() => setHoveredCard(index)}
                   onMouseLeave={() => setHoveredCard(null)}
                   role="button"
-                  aria-label={`Pause or resume scrolling for ${service.name}`}
+                  aria-label={`Learn more about ${service.name}`}
                   tabIndex={0}
                   onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
                 >
@@ -268,6 +335,10 @@ const Services = () => {
               ))}
             </div>
           </div>
+          
+          {/* Fade edges for better visual effect */}
+          <div className="absolute top-0 left-0 w-20 h-full bg-gradient-to-r from-slate-50 to-transparent pointer-events-none z-10"></div>
+          <div className="absolute top-0 right-0 w-20 h-full bg-gradient-to-l from-orange-50 to-transparent pointer-events-none z-10"></div>
         </div>
       </div>
 
@@ -276,35 +347,6 @@ const Services = () => {
         <div className="absolute top-0 left-0 w-full h-1/4 bg-gradient-to-b from-orange-50/40 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-full h-1/4 bg-gradient-to-t from-orange-50/30 to-transparent"></div>
       </div>
-
-      <style jsx>{`
-        @keyframes scroll-right {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .scrollbar-hidden::-webkit-scrollbar {
-          display: none;
-        }
-        
-        .scrollbar-hidden {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        
-        .snap-x {
-          scroll-snap-type: x mandatory;
-        }
-        
-        .snap-center {
-          scroll-snap-align: center;
-        }
-      `}</style>
     </section>
   );
 };

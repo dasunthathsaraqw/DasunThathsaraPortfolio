@@ -120,9 +120,6 @@ const Footer = () => {
               <p className="text-gray-400 text-sm">
                 © {new Date().getFullYear()} <span className="text-orange-400 font-medium">Dasun Thathsara</span>. All rights reserved.
               </p>
-              <p className="text-gray-500 text-xs mt-1">
-                Crafted with ❤️ in Sri Lanka
-              </p>
             </div>
 
             {/* Back to Top */}

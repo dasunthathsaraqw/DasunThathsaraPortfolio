@@ -47,7 +47,7 @@ const Projects = () => {
     {
       title: "Personal Portfolio",
       description: "A portfolio site showcasing my work and skills, featuring a modern design with responsive layouts and interactive elements.",
-      github: "https://github.com/yourusername/portfolio",
+      github: "https://github.com/dasunthathsaraqw/DasunThathsaraPortfolio",
       languages: ["HTML", "CSS", "JavaScript"],
       date: "2024-08-20",
     },

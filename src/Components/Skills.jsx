@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import a1 from "./a1.jpeg";
-import a2 from "./a2.jpeg";
+import a1 from "./a2.jpeg";
+import a2 from "./a1.jpeg";
 
 const Skills = () => {
   const [visibleSections, setVisibleSections] = useState([]);
