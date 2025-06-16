@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logo from "./logo.png";
+import cvpdf from "./hemachandraCVupdated.pdf"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -99,7 +100,7 @@ const Header = () => {
           
           {/* Download CV Button (Mobile) */}
           <a
-            href="your-cv.pdf"
+            href={cvpdf}
             download
             className="md:hidden group relative px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 hover:scale-105 mt-4 text-center animate-fade-in"
             style={{ animationDelay: '500ms' }}
@@ -112,7 +113,7 @@ const Header = () => {
 
         {/* Download CV Button (Desktop) */}
         <a
-          href="your-cv.pdf"
+          href={cvpdf}
           download
           className="hidden md:inline-block group relative px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full font-medium overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/25 hover:scale-105"
         >
