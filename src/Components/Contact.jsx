@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [visibleSections, setVisibleSections] = useState([]);
@@ -9,6 +10,7 @@ const Contact = () => {
     message: ''
   });
   const [focusedField, setFocusedField] = useState(null);
+  const [status, setStatus] = useState(null); // For user feedback
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -74,7 +76,6 @@ const Contact = () => {
     }
   ];
 
-  // Scroll animation effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -100,24 +101,9 @@ const Contact = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Animated background circles
-  const BackgroundCircles = () => (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Large floating circles */}
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute top-1/4 -left-40 w-80 h-80 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full blur-3xl opacity-15 animate-pulse" style={{animationDelay: '2s'}}></div>
-      <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-25 animate-pulse" style={{animationDelay: '4s'}}></div>
-      
-      {/* Medium floating circles */}
-      <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full blur-2xl opacity-30 animate-bounce" style={{animationDuration: '6s'}}></div>
-      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-2xl opacity-20 animate-bounce" style={{animationDuration: '8s', animationDelay: '3s'}}></div>
-      
-      {/* Small floating circles */}
-      <div className="absolute top-1/2 right-16 w-24 h-24 bg-orange-200 rounded-full blur-xl opacity-40 animate-ping" style={{animationDuration: '4s'}}></div>
-      <div className="absolute top-3/4 left-16 w-28 h-28 bg-orange-300 rounded-full blur-xl opacity-30 animate-ping" style={{animationDuration: '5s', animationDelay: '2s'}}></div>
-      <div className="absolute bottom-1/3 right-1/5 w-20 h-20 bg-orange-200 rounded-full blur-xl opacity-35 animate-ping" style={{animationDuration: '3s', animationDelay: '1s'}}></div>
-    </div>
-  );
+  useEffect(() => {
+    emailjs.init('h9EBYd38kGKFVk32d');
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -128,10 +114,46 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    // You can add your form submission logic here
+    setStatus('sending');
+    console.log('Form Data before send:', formData); // Debug
+    const time = new Date().toLocaleString(); // Optional timestamp
+    emailjs.send(
+      'service_vq8oktm',
+      'template_g7rsl3i',
+      {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        // time: time // Uncomment if you update the template to use {{time}}
+      },
+      'h9EBYd38kGKFVk32d'
+    )
+    .then(
+      () => {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus(null), 3000);
+      },
+      (error) => {
+        setStatus('error');
+        console.error('Email sending failed:', error.text);
+        setTimeout(() => setStatus(null), 3000);
+      }
+    );
   };
+
+  const BackgroundCircles = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+      <div className="absolute top-1/4 -left-40 w-80 h-80 bg-gradient-to-br from-orange-300 to-orange-400 rounded-full blur-3xl opacity-15 animate-pulse" style={{animationDelay: '2s'}}></div>
+      <div className="absolute -bottom-32 right-1/3 w-72 h-72 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-3xl opacity-25 animate-pulse" style={{animationDelay: '4s'}}></div>
+      <div className="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full blur-2xl opacity-30 animate-bounce" style={{animationDuration: '6s'}}></div>
+      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-gradient-to-br from-orange-200 to-orange-300 rounded-full blur-2xl opacity-20 animate-bounce" style={{animationDuration: '8s', animationDelay: '3s'}}></div>
+      <div className="absolute top-1/2 right-16 w-24 h-24 bg-orange-200 rounded-full blur-xl opacity-40 animate-ping" style={{animationDuration: '4s'}}></div>
+      <div className="absolute top-3/4 left-16 w-28 h-28 bg-orange-300 rounded-full blur-xl opacity-30 animate-ping" style={{animationDuration: '5s', animationDelay: '2s'}}></div>
+      <div className="absolute bottom-1/3 right-1/5 w-20 h-20 bg-orange-200 rounded-full blur-xl opacity-35 animate-ping" style={{animationDuration: '3s', animationDelay: '1s'}}></div>
+    </div>
+  );
 
   return (
     <section 
@@ -140,9 +162,7 @@ const Contact = () => {
       className="py-20 bg-gradient-to-br from-slate-50 via-white to-orange-50 relative overflow-hidden min-h-screen"
     >
       <BackgroundCircles />
-      
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        {/* Animated Header */}
         <div 
           ref={headerRef}
           className={`text-center mb-16 transform transition-all duration-1000 ${
@@ -159,7 +179,6 @@ const Contact = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 items-start">
-          {/* Contact Form */}
           <div 
             ref={formRef}
             className={`w-full lg:w-2/3 transform transition-all duration-1000 ${
@@ -242,7 +261,7 @@ const Contact = () => {
                         : 'border-gray-200 hover:border-orange-300'
                     }`}
                     required
-                  ></textarea>
+                  />
                   {focusedField === 'message' && (
                     <div className="absolute right-3 top-4">
                       <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,13 +281,21 @@ const Contact = () => {
                   </svg>
                   <span>Send Message</span>
                 </button>
+
+                {status === 'sending' && (
+                  <p className="text-blue-600 mt-4 text-center">Sending message...</p>
+                )}
+                {status === 'success' && (
+                  <p className="text-green-600 mt-4 text-center">Message sent successfully!</p>
+                )}
+                {status === 'error' && (
+                  <p className="text-red-600 mt-4 text-center">Failed to send message. Please try again.</p>
+                )}
               </form>
             </div>
           </div>
 
-          {/* Contact Info & Social Links */}
           <div className="w-full lg:w-1/3 space-y-8">
-            {/* Contact Information */}
             <div 
               className={`bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/50 transform transition-all duration-1000 ${
                 visibleSections.includes('form') ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
@@ -302,7 +329,6 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Social Media Links */}
             <div 
               ref={socialRef}
               className={`bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/50 transform transition-all duration-1000 ${
@@ -348,7 +374,6 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Enhanced gradient overlay */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-1/4 bg-gradient-to-b from-orange-50/40 to-transparent"></div>
         <div className="absolute bottom-0 right-0 w-full h-1/4 bg-gradient-to-t from-orange-50/30 to-transparent"></div>
